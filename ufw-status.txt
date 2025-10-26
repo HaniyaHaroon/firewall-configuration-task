@@ -1,0 +1,3 @@
+sudo ufw status verbose 
+
+Check and review all current firewall rules and settings in detail. This helps you verify which ports are allowed, which are blocked, and confirm the firewall is functioning as expected.

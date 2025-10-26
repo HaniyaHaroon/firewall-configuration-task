@@ -1,0 +1,61 @@
+================================================
+FIREWALL CONFIGURATION USING UFW ON KALI LINUX
+================================================
+
+# Update the package list to get the latest version of all repositories.
+sudo apt update
+-> Ensures your system knows about the latest available software updates and security patches.
+
+# Install UFW (Uncomplicated Firewall) if it’s not already installed.
+sudo apt install ufw -y
+-> Downloads and installs UFW automatically without asking for confirmation (-y).
+
+# Enable the firewall.
+sudo ufw enable
+-> Activates UFW so that it starts filtering network traffic based on its rules.
+
+# Check the current firewall status and rules in a detailed view.
+sudo ufw status verbose
+-> Displays whether UFW is active, default policies, and any rules currently applied.
+
+# Add a rule to block inbound TCP traffic on port 23 (Telnet).
+sudo ufw deny 23/tcp
+-> Denies any incoming connections using the TCP protocol on port 23.
+-> Telnet (port 23) is insecure, so blocking it is a common security best practice.
+
+# Display all the rules currently configured in UFW with numbering.
+sudo ufw status numbered
+-> Shows the list of active rules along with rule numbers, which help when deleting specific rules later.
+
+# Test the Telnet block rule by trying to connect to port 23.
+telnet localhost 23
+-> Attempts to connect to the local machine on port 23.
+-> If the rule is working, the connection will fail or be refused.
+
+# Allow inbound TCP traffic on port 22 (SSH).
+sudo ufw allow 22/tcp
+-> Allows secure shell (SSH) connections so you can remotely access your system safely.
+-> Port 22 is the default SSH port.
+
+# Display rules again to confirm that both allow (SSH) and deny (Telnet) rules are applied.
+sudo ufw status numbered
+-> Helps verify that rules are active and ordered correctly.
+
+# Remove the deny rule for Telnet to restore normal settings.
+sudo ufw delete deny 23/tcp
+-> Deletes the specific rule that was blocking Telnet.
+-> Alternatively, you can delete by rule number (see below).
+
+# Delete a rule by its rule number (optional method).
+sudo ufw delete [rule_number]
+ -> Replace [rule_number] with the number shown in 'sudo ufw status numbered'.
+-> Useful if multiple rules for the same port exist.
+
+# Export current UFW configuration (for documentation).
+sudo ufw status verbose > ufw-status.txt
+-> Saves the full UFW rule set and status into a text file for your submission.
+
+# Disable UFW (optional cleanup step).
+sudo ufw disable
+-> Turns off the firewall, reverting the system to an unfiltered state.
+-> Useful after testing or before uninstalling UFW.
